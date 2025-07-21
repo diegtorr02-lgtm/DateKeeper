@@ -1,0 +1,10 @@
+node_modules/
+dist/
+android/app/build/
+android/.gradle/
+android/build/
+.vscode/
+.idea/
+.DS_Store
+npm-debug.log*
+.env
