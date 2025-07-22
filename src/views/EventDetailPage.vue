@@ -16,6 +16,10 @@
         <p><strong>Start:</strong> {{ formatDate(event.startDate) }}</p>
         <p><strong>Ende:</strong> {{ formatDate(event.endDate) }}</p>
         <p><strong>Ganztägig:</strong> {{ event.isAllDay ? 'Ja' : 'Nein' }}</p>
+        <p v-if="event.priority"
+           :style="event.priority === 'hoch' ? 'color:#e74c3c;font-weight:bold;' : ''">
+          <strong>Priorität:</strong> {{ event.priority }}
+        </p>
 
         <ion-button expand="block" color="primary" :href="mapsUrl" target="_blank" v-if="event.location">
           Ort auf Karte anzeigen
@@ -26,6 +30,9 @@
         <ion-button expand="block" color="danger" @click="confirmDelete">
           Termin löschen
         </ion-button>
+        <ion-button expand="block" color="warning" :router-link="`/events/edit/${event.id}`">Termin bearbeiten
+        </ion-button>
+
       </div>
       <div v-else>
         <p>Termin wird geladen…</p>

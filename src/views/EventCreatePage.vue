@@ -62,13 +62,15 @@ import {
   IonButton,
   IonToggle,
   IonDatetime,
-  IonDatetimeButton
+  IonDatetimeButton,
+  IonSelect,
+  IonSelectOption
 } from '@ionic/vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { registerPlugin } from '@capacitor/core';
 
-// Korrekte Registrierung nach ebarooni-Doku!
+// Plugin für Kalender
 const CapacitorCalendar = registerPlugin<any>('CapacitorCalendar');
 const router = useRouter();
 
@@ -77,6 +79,7 @@ const location = ref('');
 const startDate = ref(new Date().toISOString());
 const endDate = ref(new Date().toISOString());
 const allDay = ref(false);
+const priority = ref(''); // NEU
 
 const saveEvent = async () => {
   if (!title.value) {
@@ -88,12 +91,12 @@ const saveEvent = async () => {
     await CapacitorCalendar.createEvent({
       title: title.value,
       location: location.value,
-      startDate: new Date(startDate.value).getTime(), // Plugin erwartet Zahl!
+      startDate: new Date(startDate.value).getTime(),
       endDate: new Date(endDate.value).getTime(),
-      isAllDay: allDay.value
+      isAllDay: allDay.value,
+      priority: priority.value // NEU
     });
 
-    // Optional: Toast, dass gespeichert wurde!
     alert('Termin gespeichert!');
     router.push('/events');
   } catch (error) {

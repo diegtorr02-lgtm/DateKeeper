@@ -12,8 +12,6 @@ const routes: Array<RouteRecordRaw> = [
     path: '/calendar',
     name: 'Calendar',
     component: () => import('../views/CalendarView.vue')
-
-
   },
   {
     path: '/home',
@@ -31,10 +29,15 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/EventDetailPage.vue')
   },
   {
-  path: '/events/new',
-  name: 'EventCreate',
-  component: () => import('@/views/EventCreatePage.vue')
-}
+    path: '/events/new',
+    name: 'EventCreate',
+    component: () => import('@/views/EventCreatePage.vue')
+  },
+  {
+    path: '/events/edit/:id',
+    name: 'EventEdit',
+    component: () => import('@/views/EventEditPage.vue')
+  }
 ];
 
 const router = createRouter({
