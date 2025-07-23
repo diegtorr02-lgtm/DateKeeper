@@ -1,12 +1,15 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Deine Termine</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content>
+    <div class="events-banner-wrapper">
+      <banner-header title="Deine Termine" />
+    </div>
+    <ion-content fullscreen class="events-bg">
+      <ion-refresher slot="fixed" @ionRefresh="handleRefresh">
+        <ion-refresher-content
+          pulling-text="Liste aktualisieren…"
+          refreshing-spinner="circles"
+          refreshing-text="Aktualisiere…" />
+      </ion-refresher>
       <div style="display: flex; gap: 12px; justify-content: center; margin: 18px 0 8px 0;">
         <ion-button expand="block" color="success" router-link="/events/new">
           + Neuer Termin
@@ -50,19 +53,19 @@
 </template>
 
 <script setup lang="ts">
+import BannerHeader from '@/BannerHeader.vue'
 import { ref, onMounted, computed } from 'vue';
 import {
   IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
   IonList,
   IonItem,
   IonLabel,
   IonButton,
   IonInput,
-  IonIcon
+  IonIcon,
+  IonRefresher,
+  IonRefresherContent
 } from '@ionic/vue';
 import { searchOutline } from 'ionicons/icons';
 import { registerPlugin } from '@capacitor/core';
@@ -73,7 +76,11 @@ const events = ref<any[]>([]);
 const showFilter = ref(false);
 const searchQuery = ref('');
 
-// Sortierlogik: Hoch → Mittel → Niedrig → Rest → nach Datum
+const handleRefresh = async (event: any) => {
+  await loadEvents();
+  event.target.complete();
+};
+
 const priorityOrder = new Map([
   ['hoch', 0],
   ['mittel', 1],
@@ -124,6 +131,32 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.events-banner-wrapper {
+  position: relative;
+  z-index: 1001;
+}
+
+/* GANZ WICHTIG: Hintergrund direkt auf IonContent, Liste, Items */
+.events-bg,
+:deep(.ion-page),
+:deep(ion-content) {
+  background: #e8f6f1 !important;
+}
+
+:deep(ion-list) {
+  background: transparent !important;
+  /* Kein weiß mehr */
+}
+
+:deep(ion-item) {
+  --background: transparent !important;
+  background: transparent !important;
+}
+
+:deep(ion-label) {
+  background: transparent !important;
+}
+
 .high-priority {
   border-left: 4px solid #e74c3c;
   background-color: #fff6f6;

@@ -1,133 +1,171 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-back-button defaultHref="/events" />
-        </ion-buttons>
-        <ion-title>Termin-Details</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content class="ion-padding">
-      <div v-if="event">
-        <h2>{{ event.title }}</h2>
-        <p><strong>Ort:</strong> {{ event.location || '–' }}</p>
-        <p><strong>Start:</strong> {{ formatDate(event.startDate) }}</p>
-        <p><strong>Ende:</strong> {{ formatDate(event.endDate) }}</p>
-        <p><strong>Ganztägig:</strong> {{ event.isAllDay ? 'Ja' : 'Nein' }}</p>
-        <p v-if="event.priority"
-           :style="event.priority === 'hoch' ? 'color:#e74c3c;font-weight:bold;' : ''">
-          <strong>Priorität:</strong> {{ event.priority }}
-        </p>
-
-        <ion-button expand="block" color="primary" :href="mapsUrl" target="_blank" v-if="event.location">
-          Ort auf Karte anzeigen
+    <div class="events-banner-wrapper">
+      <banner-header title="Deine Termine" />
+    </div>
+    <ion-content fullscreen style="--background: #e8f6f1;">
+      <ion-refresher slot="fixed" @ionRefresh="handleRefresh">
+        <ion-refresher-content
+          pulling-text="Liste aktualisieren…"
+          refreshing-spinner="circles"
+          refreshing-text="Aktualisiere…" />
+      </ion-refresher>
+      <div style="display: flex; gap: 12px; justify-content: center; margin: 18px 0 8px 0;">
+        <ion-button expand="block" color="success" router-link="/events/new">
+          + Neuer Termin
         </ion-button>
-        <ion-button expand="block" @click="copyLocation" v-if="event.location">
-          Ort kopieren
+        <ion-button expand="block" color="primary" @click="loadEvents">
+          Termine neu laden
         </ion-button>
-        <ion-button expand="block" color="danger" @click="confirmDelete">
-          Termin löschen
+        <ion-button expand="block" fill="clear" @click="toggleFilter">
+          <ion-icon :icon="filterIcon" slot="icon-only"></ion-icon>
         </ion-button>
-        <ion-button expand="block" color="warning" :router-link="`/events/edit/${event.id}`">Termin bearbeiten
-        </ion-button>
-
       </div>
-      <div v-else>
-        <p>Termin wird geladen…</p>
+
+      <!-- Suchfeld (sichtbar bei showFilter) -->
+      <div v-if="showFilter" style="padding: 0 16px 12px 16px;">
+        <ion-input
+          v-model="searchQuery"
+          placeholder="Nach Titel filtern..."
+          clear-input
+        ></ion-input>
       </div>
+
+      <ion-list>
+        <ion-item
+          v-for="event in filteredEvents"
+          :key="event.id"
+          @click="openEvent(event.id)"
+          :class="{
+            'high-priority': String(event.priority || '').toLowerCase() === 'hoch'
+          }"
+        >
+          <ion-label>
+            <h2>{{ event.title }}</h2>
+            <p>{{ formatDate(event.startDate) }}</p>
+            <p v-if="event.location">Ort: {{ event.location }}</p>
+            <p v-if="event.priority">Priorität: {{ event.priority }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
+import BannerHeader from '@/BannerHeader.vue'
+import { ref, onMounted, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import {
   IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
-  IonButtons,
-  IonBackButton,
+  IonList,
+  IonItem,
+  IonLabel,
   IonButton,
-  alertController,
-  toastController,
+  IonInput,
+  IonIcon,
+  IonRefresher,
+  IonRefresherContent
 } from '@ionic/vue';
-import { useRoute, useRouter } from 'vue-router';
-import { ref, onMounted, computed } from 'vue';
-import { Clipboard } from '@capacitor/clipboard';
+import { searchOutline } from 'ionicons/icons';
 import { registerPlugin } from '@capacitor/core';
+
+const router = useRouter();
+
+const openEvent = (id: string) => {
+  router.push(`/events/${id}`);
+};
 
 const CapacitorCalendar = registerPlugin<any>('CapacitorCalendar');
 
-const route = useRoute();
-const router = useRouter();
-const event = ref<any>(null);
-const eventId = route.params.id as string;
+const events = ref<any[]>([]);
+const showFilter = ref(false);
+const searchQuery = ref('');
 
-// Toast-Helfer
-const showToast = async (message: string) => {
-  const toast = await toastController.create({
-    message,
-    duration: 1500,
-    color: 'success'
-  });
-  await toast.present();
+const handleRefresh = async (event: any) => {
+  await loadEvents();
+  event.target.complete();
 };
 
-const loadEvent = async () => {
+const priorityOrder = new Map([
+  ['hoch', 0],
+  ['mittel', 1],
+  ['niedrig', 2],
+]);
+
+const loadEvents = async () => {
   try {
     const result = await CapacitorCalendar.listEventsInRange({
-      from: Date.now() - 2 * 365 * 24 * 60 * 60 * 1000,
-      to: Date.now() + 2 * 365 * 24 * 60 * 60 * 1000
+      from: Date.now() - 365 * 24 * 60 * 60 * 1000,
+      to: Date.now() + 365 * 24 * 60 * 60 * 1000
     });
-    event.value = (result.result ?? []).find((e: any) => String(e.id) === String(eventId));
+    events.value = result.result ?? [];
   } catch (err) {
-    console.error('Fehler beim Laden des Termins:', err);
+    console.error('Fehler beim Laden der Termine:', err);
   }
 };
 
+const sortedEvents = computed(() =>
+  events.value.slice().sort((a, b) => {
+    const pa = priorityOrder.get(String(a.priority || '').toLowerCase()) ?? 3;
+    const pb = priorityOrder.get(String(b.priority || '').toLowerCase()) ?? 3;
+    if (pa !== pb) return pa - pb;
+    return a.startDate - b.startDate;
+  })
+);
+
+const filteredEvents = computed(() =>
+  sortedEvents.value.filter((event) =>
+    event.title?.toLowerCase().includes(searchQuery.value.toLowerCase())
+  )
+);
+
 const formatDate = (dateNum: number) => {
-  if (!dateNum) return '-';
   const date = new Date(dateNum);
   return date.toLocaleString();
 };
 
-const mapsUrl = computed(() =>
-  event.value?.location ? `https://maps.google.com/?q=${encodeURIComponent(event.value.location)}` : ''
-);
-
-const copyLocation = async () => {
-  await Clipboard.write({ string: event.value.location });
-  await showToast('Ort wurde in die Zwischenablage kopiert.');
+const toggleFilter = () => {
+  showFilter.value = !showFilter.value;
 };
 
-const confirmDelete = async () => {
-  const alert = await alertController.create({
-    header: 'Termin löschen?',
-    message: 'Bist du sicher, dass du diesen Termin löschen willst?',
-    buttons: [
-      {
-        text: 'Abbrechen',
-        role: 'cancel',
-      },
-      {
-        text: 'Löschen',
-        role: 'destructive',
-        handler: async () => {
-          await CapacitorCalendar.deleteEvent({ id: event.value.id });
-          await showToast('Termin gelöscht!');
-          router.push('/events');
-        },
-      },
-    ],
-  });
-
-  await alert.present();
-};
+const filterIcon = searchOutline;
 
 onMounted(() => {
-  loadEvent();
+  loadEvents();
 });
 </script>
+
+<style scoped>
+.events-banner-wrapper {
+  position: relative;
+  z-index: 1001;
+}
+/* Mintgrüner Hintergrund für alles */
+:deep(ion-content) {
+  --background: #e8f6f1 !important;
+  background: #e8f6f1 !important;
+}
+:deep(ion-list) {
+  background: transparent !important;
+}
+:deep(ion-item) {
+  --background: rgba(255,255,255,0.03) !important;
+  background: rgba(255,255,255,0.03) !important;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+:deep(ion-item:hover),
+:deep(ion-item:active),
+:deep(ion-item:focus) {
+  background: #dbf4ec !important;
+}
+:deep(ion-label) {
+  background: transparent !important;
+}
+.high-priority {
+  border-left: 4px solid #e74c3c;
+  background-color: #fff6f6 !important;
+}
+</style>
