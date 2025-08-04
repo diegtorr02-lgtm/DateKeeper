@@ -50,7 +50,7 @@
               <rect x="20" y="8" width="2" height="4" rx="1" fill="white"/>
             </svg>
           </span>
-          <span class="btn-text">Monatsübersicht</span>
+          <span class="btn-text">Kalenderübersicht</span>
         </router-link>
       </div>
     </div>
@@ -166,5 +166,6 @@
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   line-height: 1.22;
+
 }
 </style>

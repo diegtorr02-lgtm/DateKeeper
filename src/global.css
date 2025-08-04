@@ -1,15 +1,8 @@
-/* For information on how to create your own theme, please see:
-http://ionicframework.com/docs/theming/ */
-:root {
-  /* ...andere Farben... */
-
-  --ion-color-success: #4D9B85;
-  --ion-color-success-rgb: 77, 155, 133;
-  --ion-color-success-contrast: #fff;
-  --ion-color-success-contrast-rgb: 255,255,255;
-  --ion-color-success-shade: #44876f;
-  --ion-color-success-tint: #62a793;
+.wheel-order-month-first {
+  background: #e8f6f1 !important;
 }
+/* weitere Selektoren ... */
+
 
 :root {
   /* ...evtl. bestehende Colors ... */
@@ -22,7 +15,7 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-mint-tint: #67b29b;
 
   /* Falls du den primary-Color überschreiben willst: */
-  --ion-color-primary: var(--ion-color-mint); 
+  /* --ion-color-primary: var(--ion-color-mint); */
 }
 
 /* Optional: Theme map, wenn vorhanden: */

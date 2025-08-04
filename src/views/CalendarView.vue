@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content fullscreen>
-      <banner-header title="Monatsübersicht" />
+      <banner-header title="Kalenderübersicht" />
       <div class="monat-bg">
         <div class="monat-inner">
           <ion-button
