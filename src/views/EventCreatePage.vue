@@ -228,7 +228,8 @@ async function saveEvent() {
 .erweiterte-datums-btn {
   --background: #e8f6f1 !important;
   color: #4D9B85 !important;
-  border: 1px solid #4D9B85;
+  border: 3px solid #4D9B85;
+  
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   font-size: 1rem;  
@@ -236,6 +237,3 @@ async function saveEvent() {
   margin-bottom: 12px;
 }
 </style>
-
- --background: #4D9B85 !important;
-  margin-top: 12px;s
