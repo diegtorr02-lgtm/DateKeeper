@@ -114,7 +114,7 @@ function formatDate(val: string) {
   })
 }
 
-// Neue Funktion zum Öffnen des Datetime-Picker-Plugins
+
 async function openAdvancedDatepicker() {
   try {
     const { value } = await DatetimePicker.present({
@@ -123,9 +123,9 @@ async function openAdvancedDatepicker() {
       mode: 'datetime',
       value: startDate.value,
       locale: 'de-DE',
-      theme: 'light' // oder 'dark' je nach App-Theme
+      theme: 'light' 
     });
-    // Wenn ein Datum ausgewählt wurde, setze es für Start- und Enddatum
+    
     if (value) {
       startDate.value = value;
       endDate.value = value;

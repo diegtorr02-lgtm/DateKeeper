@@ -16,7 +16,6 @@
           </div>
           <template v-else>
             <div class="top-actions-row">
-              <!-- + NEUER TERMIN -->
               <ion-button
                 class="gruen-btn"
                 router-link="/events/new"
@@ -30,7 +29,6 @@
               >
                 Kalenderübersicht
               </ion-button>
-              <!-- Lupe (nur einmal!) -->
               <button class="icon-btn" @click="toggleFilter">
                 <ion-icon :icon="filterIcon"></ion-icon>
               </button>
@@ -98,7 +96,7 @@ const loading     = ref(true)
 const showFilter  = ref(false)
 const searchQuery = ref('')
 
-// 1) Funktion zum Laden aller Termine
+
 async function loadEvents() {
   loading.value = true
   try {
@@ -113,23 +111,19 @@ async function loadEvents() {
   loading.value = false
 }
 
-// 2) Beim ersten Mount
+
 onMounted(() => {
   loadEvents()
 })
-
-// 3) Jedes Mal, wenn die View wieder betreten wird
 onIonViewWillEnter(() => {
   loadEvents()
 })
 
-// 4) Pull‑to‑refresh
 const handleRefresh = async (e: any) => {
   await loadEvents()
   e.target.complete()
 }
 
-// 5) Sortierung & Filter
 const priorityOrder = new Map([['hoch',0],['mittel',1],['niedrig',2]])
 const sortedEvents = computed(() =>
   events.value

@@ -113,9 +113,8 @@ function formatDate(val: string) {
   })
 }
 
-// Lade die Eventdaten als Vorlage
 const loadEvent = async () => {
-    if (!eventId) return; // Abbruch, wenn keine ID vorhanden ist
+    if (!eventId) return;
 
     try {
         const result = await CapacitorCalendar.listEventsInRange({
@@ -126,7 +125,7 @@ const loadEvent = async () => {
         if (ev) {
             title.value = ev.title || '';
             location.value = ev.location || '';
-            description.value = ev.description || ''; // Füge die Beschreibung hinzu
+            description.value = ev.description || ''; 
             startDate.value = new Date(ev.startDate).toISOString();
             endDate.value = new Date(ev.endDate).toISOString();
             allDay.value = !!ev.isAllDay;

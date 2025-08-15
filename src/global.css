@@ -1,11 +1,10 @@
 .wheel-order-month-first {
   background: #e8f6f1 !important;
 }
-/* weitere Selektoren ... */
 
 
 :root {
-  /* ...evtl. bestehende Colors ... */
+
 
   --ion-color-mint: #4D9B85;
   --ion-color-mint-rgb: 77, 155, 133;
@@ -14,11 +13,9 @@
   --ion-color-mint-shade: #44886d;
   --ion-color-mint-tint: #67b29b;
 
-  /* Falls du den primary-Color überschreiben willst: */
-  /* --ion-color-primary: var(--ion-color-mint); */
 }
 
-/* Optional: Theme map, wenn vorhanden: */
+/* Optional: */
 .ion-color-mint {
   --ion-color-base: var(--ion-color-mint);
   --ion-color-base-rgb: var(--ion-color-mint-rgb);

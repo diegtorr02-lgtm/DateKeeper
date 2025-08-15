@@ -1,6 +1,5 @@
 <template>
   <ion-page>
-    <!-- Banner wie auf allen anderen Seiten -->
     <banner-header title="Termin-Details" />
     <ion-content fullscreen class="events-bg">
       <div v-if="event">
@@ -70,7 +69,6 @@ const router = useRouter();
 const event = ref<any>(null);
 const eventId = route.params.id as string;
 
-// Toast-Helfer
 const showToast = async (message: string) => {
   const toast = await toastController.create({
     message,

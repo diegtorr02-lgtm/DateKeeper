@@ -9,7 +9,6 @@
       <div class="button-list">
         <router-link to="/events/new" class="home-btn">
           <span class="btn-icon">
-            <!-- Plus im Kreis -->
             <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
               <circle cx="16" cy="16" r="14" stroke="white" stroke-width="2" fill="none"/>
               <path d="M16 11v10M11 16h10" stroke="white" stroke-width="2" stroke-linecap="round"/>
@@ -19,7 +18,6 @@
         </router-link>
         <router-link to="/events" class="home-btn">
           <span class="btn-icon">
-            <!-- Liste -->
             <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
               <rect x="9" y="10" width="14" height="2" rx="1" fill="white"/>
               <rect x="9" y="15" width="14" height="2" rx="1" fill="white"/>
@@ -33,7 +31,6 @@
         </router-link>
         <router-link to="/calendar" class="home-btn">
           <span class="btn-icon">
-            <!-- Kalender -->
             <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
               <rect x="6" y="10" width="20" height="16" rx="3" fill="white"/>
               <rect x="6" y="15" width="20" height="2" fill="#31a297"/>
@@ -45,7 +42,6 @@
               <rect x="14" y="22" width="2" height="2" fill="#31a297"/>
               <rect x="18" y="22" width="2" height="2" fill="#31a297"/>
               <rect x="22" y="22" width="2" height="2" fill="#31a297"/>
-              <!-- Kalender-Ringe oben -->
               <rect x="10" y="8" width="2" height="4" rx="1" fill="white"/>
               <rect x="20" y="8" width="2" height="4" rx="1" fill="white"/>
             </svg>
@@ -58,7 +54,6 @@
 </template>
 
 <script setup lang="ts">
-// Kein Script nötig!
 </script>
 
 <style scoped>
@@ -78,7 +73,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 48px; /* Verschiebt alles nach unten */
+  margin-top: 48px;
 }
 
 .welcome-title {

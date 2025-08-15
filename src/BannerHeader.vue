@@ -1,14 +1,12 @@
 <template>
   <div class="banner-header">
     <router-link to="/home" class="banner-icon">
-      <!-- Home-Icon SVG wie gehabt -->
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
         <path d="M3 12L12 4l9 8" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <rect x="6.5" y="13" width="11" height="7" rx="1.5" fill="#fff" stroke="#fff" stroke-width="2"/>
       </svg>
     </router-link>
     <button class="banner-icon" @click="goBack" aria-label="Zurück">
-      <!-- Back-Arrow-Icon SVG (z.B. Pfeil nach links) -->
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
         <path d="M15 18l-6-6 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>

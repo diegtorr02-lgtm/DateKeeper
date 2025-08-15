@@ -13,9 +13,7 @@ const CapacitorCalendar = registerPlugin<any>('CapacitorCalendar');
 
 onMounted(async () => {
   try {
-    // Prüfe zuerst den Status der Berechtigungen
     const status = await CapacitorCalendar.checkAllPermissions();
-    // Wenn noch nicht erlaubt, dann anfordern
     if (
       status.result?.readCalendar !== 'granted' ||
       status.result?.writeCalendar !== 'granted'
@@ -25,7 +23,6 @@ onMounted(async () => {
         perm.result?.readCalendar !== 'granted' ||
         perm.result?.writeCalendar !== 'granted'
       ) {
-        // Optional: Freundlicher Hinweis (Toast oder alert)
         alert("Bitte Kalender-Berechtigung aktivieren, damit die App funktioniert.");
       }
     }
