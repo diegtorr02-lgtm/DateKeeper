@@ -89,6 +89,7 @@ import {
 } from '@ionic/vue'
 import { DatetimePicker } from '@capawesome-team/capacitor-datetime-picker'
 
+
 const router = useRouter()
 const CapacitorCalendar = registerPlugin<any>('CapacitorCalendar')
 
