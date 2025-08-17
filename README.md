@@ -10,34 +10,34 @@ ________________________________________
 
 •	Begrüßungsseite mit Branding und Logo.
 •	Drei Hauptfunktionen über Buttons erreichbar:
-o	Neuen Termin hinzufügen
-o	Termine ansehen (Liste)
-o	Kalenderübersicht (Monatsansicht)
+•	Neuen Termin hinzufügen
+•		Termine ansehen (Liste)
+•		Kalenderübersicht (Monatsansicht)
 Besonderheit: Die Statusbar ist auf der Home-Seite im hellen Mintgrün (#e8f6f1) eingefärbt.
 ________________________________________
 **✍️ Termin erstellen / bearbeiten**
 
 •	Eingabefelder:
-o	Titel (Pflichtfeld)
-o	Ort
-o	Start- & Enddatum mit integriertem DateTime-Picker
-o	Ganztägig-Umschalter
-o	Beschreibung (mehrzeilig, Auto-Grow)
+•	Titel (Pflichtfeld)
+•	Ort
+•	Start- & Enddatum mit integriertem DateTime-Picker
+•	Ganztägig-Umschalter
+•	Beschreibung (mehrzeilig, Auto-Grow)
 •	Layout:
-o	Einheitliche Hintergrundfarbe (Mintgrün)
-o	Abgerundete Inputfelder
-o	Buttons klar in Mintgrün hervorgehoben
+•	Einheitliche Hintergrundfarbe (Mintgrün)
+•	Abgerundete Inputfelder
+•	Buttons klar in Mintgrün hervorgehoben
 •	Speichern legt den Termin im nativen Kalender an.
 •	Abbrechen führt zurück zur Event-Liste.
 ________________________________________
 **📖 Termin-Details**
 
 •	Zeigt:
-o	Titel, Ort, Datum/Zeit, Beschreibung
+•	Titel, Ort, Datum/Zeit, Beschreibung
 •	Buttons:
-o	Ort kopieren
-o	Termin als Vorlage verwenden
-o	Termin löschen (löscht aus dem nativen Kalender)
+•	Ort kopieren
+•	Termin als Vorlage verwenden
+•	Termin löschen (löscht aus dem nativen Kalender)
 ________________________________________
 **📋 Terminliste**
 
@@ -55,9 +55,9 @@ ________________________________________
 **🔙 Navigation & Banner**
 
 •	BannerHeader-Komponente:
-o	Enthält Seiten-Titel.
-o	Links: Home-Button (zurück zur Startseite).
-o	Daneben: Zurück-Button (zurück zur vorherigen Ansicht).
+•	Enthält Seiten-Titel.
+•	Links: Home-Button (zurück zur Startseite).
+•	Daneben: Zurück-Button (zurück zur vorherigen Ansicht).
 •	Einheitlich auf allen Seiten außer der Home-Seite.
 
 
