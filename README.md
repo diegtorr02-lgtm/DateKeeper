@@ -11,8 +11,8 @@ ________________________________________
 •	Begrüßungsseite mit Branding und Logo.
 •	Drei Hauptfunktionen über Buttons erreichbar:
 •	Neuen Termin hinzufügen
-•		Termine ansehen (Liste)
-•		Kalenderübersicht (Monatsansicht)
+•	Termine ansehen (Liste)
+•	Kalenderübersicht (Monatsansicht)
 Besonderheit: Die Statusbar ist auf der Home-Seite im hellen Mintgrün (#e8f6f1) eingefärbt.
 ________________________________________
 **✍️ Termin erstellen / bearbeiten**
